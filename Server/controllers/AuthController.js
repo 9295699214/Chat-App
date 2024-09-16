@@ -8,7 +8,10 @@ const createToken = (userId, email) =>{
 
 export const signup = async (request, response, next) => {
     try {
+        alert(request.body);
         const {email, password} = request.body;
+        console.log(email);
+        console.log(password)
         if(!email || !password){
             return response.status(400).send("Email and Password is required");
         }
