@@ -114,7 +114,7 @@ export const updateProfile = async (request, response, next) =>{
         const {userId} = request;
         const {firstName, lastName, color} = request.body;
 
-        if(!firstName || !lastName || !color){
+        if(!firstName || !lastName || color !== undefined){
             return response.status(400).send("First Name , Last Name or Color is required.");
         }
         const userData = await User.findByIdAndUpdate(userId,{
