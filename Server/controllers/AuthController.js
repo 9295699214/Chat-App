@@ -143,7 +143,7 @@ export const addProfileImage = async (request, response, next) => {
         const {userId} = request;
         const {firstName, lastName, color} = request.body;
 
-        if(!firstName || !lastName || color !== undefined){
+        if(!firstName || !lastName || color === undefined){
             return response.status(400).send("First Name , Last Name or Color is required.");
         }
         const userData = await User.findByIdAndUpdate(userId,{
@@ -152,6 +152,26 @@ export const addProfileImage = async (request, response, next) => {
             color, 
             profileSetup : true
         },{new: true,runValidators: true})
+        return response.status(200).json({
+                id: userData.id,
+                email: userData.email,
+                profileSetup: userData.profileSetup,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                image: userData.image,
+                color: userData.color
+        });
+    } catch (error) {
+        console.log(error);
+        return response.status(500).send("Internal Server error");
+    }
+}
+
+export const removeProfileImage = async (request, response, next) =>{
+    try {
+        if(!request.file) return response.status(400).send("File is required!");
+        const date = Date.now();
+        // let fileName = 
         return response.status(200).json({
                 id: userData.id,
                 email: userData.email,
